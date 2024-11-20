@@ -60,14 +60,14 @@ export default class Wizard extends Webform {
 
   getPages(args = {}) {
     const { all = false } = args;
-    const pages = this.hasExtraPages ? this.components : this.pages;
+    const pages = this.hasSubWizards ? this.components : this.pages;
     const filteredPages = pages
       .filter(all ? _.identity : (p, index) => this._seenPages.includes(index));
 
     return filteredPages;
   }
 
-  get hasExtraPages() {
+  get hasSubWizards() {
     return !_.isEmpty(this.subWizards);
   }
 
@@ -676,7 +676,7 @@ export default class Wizard extends Webform {
       this.getNextPage();
 
       let parentNum = num;
-      if (this.hasExtraPages) {
+      if (this.hasSubWizards) {
         const pageFromPages = this.pages[num];
         const pageFromComponents = this.components[num];
         if (!pageFromComponents || pageFromPages?.id !== pageFromComponents.id) {
@@ -1009,7 +1009,7 @@ export default class Wizard extends Webform {
     let currentPanels;
     let panels;
     const currentNextPage = this.currentNextPage;
-    if (this.hasExtraPages) {
+    if (this.hasSubWizards) {
       currentPanels = this.pages.map(page => page.component.key);
       this.establishPages();
       panels = this.pages.map(page => page.component.key);
@@ -1074,7 +1074,7 @@ export default class Wizard extends Webform {
   }
 
   showErrors(errors, triggerEvent) {
-    if (this.hasExtraPages) {
+    if (this.hasSubWizards) {
       this.subWizards.forEach((subWizard) => {
         if(Array.isArray(subWizard.errors)) {
           errors = [...errors, ...subWizard.errors]
