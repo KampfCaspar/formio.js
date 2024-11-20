@@ -216,9 +216,9 @@ export default class Wizard extends Webform {
   render() {
     const ctx = this.renderContext;
 
-    if (this.component.key) {
-      ctx.panels.map(panel => {
-        if (panel.key === this.component.key) {
+    if (this.component.id) {
+      ctx.panels.forEach(panel => {
+        if (panel.id === this.component.id) {
           this.currentPanel = panel;
           ctx.wizardPageTooltip = this.getFormattedTooltip(panel.tooltip);
         }
