@@ -37,7 +37,6 @@ export default class Wizard extends Webform {
     this.originalComponents = [];
     this.page = 0;
     this.currentPanel = null;
-    this.currentPanels = null;
     this.currentNextPage = 0;
     this._seenPages = [0];
     this.subWizards = [];
@@ -1006,24 +1005,18 @@ export default class Wizard extends Webform {
     }
 
     // If the pages change, need to redraw the header.
-    let currentPanels;
-    let panels;
+    const currentPanels = this.pages;
+    // calling this.establishPages() updates/mutates this.pages to be the current pages
+    this.establishPages();
+    const newPanels = this.pages;
     const currentNextPage = this.currentNextPage;
-    if (this.hasSubWizards) {
-      currentPanels = this.pages.map(page => page.component.key);
-      this.establishPages();
-      panels = this.pages.map(page => page.component.key);
+    const panelsUpdated = !_.isEqual(newPanels, currentPanels);
+    
+    if (this.currentPanel?.id && this.pages.length && (!this.hasSubWizards || (this.hasSubWizards && panelsUpdated))) {
+      const newIndex = this.pages.findIndex(page => page.id === this.currentPanel.id);
+      if (newIndex !== -1) this.setPage(newIndex);
     }
-    else {
-      currentPanels = this.currentPanels || this.pages.map(page => page.component.key);
-      panels = this.establishPages().map(panel => panel.key);
-      this.currentPanels = panels;
-      if (this.currentPanel?.key && this.currentPanels?.length) {
-        this.setPage(this.currentPanels.findIndex(panel => panel === this.currentPanel.key));
-      }
-    }
-
-    if (!_.isEqual(panels, currentPanels) || (flags && flags.fromSubmission)) {
+    if (panelsUpdated || (flags && flags.fromSubmission)) {
       this.redrawHeader();
     }
 
