@@ -310,8 +310,8 @@ export default class RadioComponent extends ListComponent {
 
   setValueAt(index, value) {
     if (this.refs.input && this.refs.input[index] && value !== null && value !== undefined) {
-      const inputValue = this.refs.input[index].value;
-      this.refs.input[index].checked = (inputValue === value.toString());
+      const inputValue = this.getValueByInput(this.refs.input[index]);
+      this.refs.input[index].checked = _.isEqual(inputValue, value);
     }
   }
 
@@ -412,11 +412,15 @@ export default class RadioComponent extends ListComponent {
     const listData = [];
     items?.forEach((item, i) => {
       const valueAtProperty = _.get(item, this.component.valueProperty);
-      this.loadedOptions[i] = {
-        value: this.prepareValue(item),
-        label: this.component.valueProperty ? this.itemTemplate(item, valueAtProperty) : this.itemTemplate(item, item, i)
-      };
-      listData.push(this.templateData[this.component.valueProperty ? valueAtProperty : i]);
+      const value = this.prepareValue(item);
+      const label = this.component.valueProperty
+        ? this.itemTemplate(item, valueAtProperty, i)
+        : this.itemTemplate(item, item, i);
+      this.loadedOptions[i] = { label, value };
+      listData.push(this.templateData[i]);
+      if (this.valuesMap.has(value)) {
+        this.templateData[value] = this.templateData[i];
+      }
 
       if ((this.component.valueProperty || !this.isRadio) && (
         _.isUndefined(valueAtProperty) ||
@@ -464,10 +468,30 @@ export default class RadioComponent extends ListComponent {
     }
   }
 
+  setMetadata(value) {
+    let key = value;
+    if (typeof value !== 'string') {
+      const checkedInput = Array.prototype.find.call(
+        this.refs.input,
+        (input => input.type === 'radio' && input.getAttribute('checked'))
+      );
+      key = checkedInput?.value || key;
+    }
+    if (this.isSelectURL && this.templateData && this.templateData[key]) {
+      const submission = this.root.submission;
+      if (!submission.metadata.selectData) {
+        submission.metadata.selectData = {};
+      }
+
+      _.set(submission.metadata.selectData, this.path, this.templateData[key]);
+    }
+  }
+
   updateValue(value, flags) {
     const changed = super.updateValue(value, flags);
     if (changed) {
       this.setSelectedClasses();
+      this.setMetadata(this.dataValue);
     }
 
     if (!flags || !flags.modified || !this.isRadio) {
@@ -530,15 +554,10 @@ export default class RadioComponent extends ListComponent {
         break;
       }
 
-    if (this.isSelectURL && this.templateData && this.templateData[value]) {
-      const submission = this.root.submission;
-      if (!submission.metadata.selectData) {
-        submission.metadata.selectData = {};
-      }
-
-      _.set(submission.metadata.selectData, this.path, this.templateData[value]);
-    }
-
     return super.normalizeValue(value);
+  }
+
+  isSingleInputValue() {
+    return true;
   }
 }
