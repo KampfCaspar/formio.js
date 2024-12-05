@@ -340,7 +340,7 @@ export default class RadioComponent extends ListComponent {
       ? _.get(item, this.component.valueProperty)
       : item;
 
-    if (typeof value !== 'string') {
+    if (this.component.type === 'radio' && typeof value !== 'string') {
       const uuid = uuidv4();
       this.valuesMap.set(uuid, value);
       return uuid;
