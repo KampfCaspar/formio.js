@@ -838,7 +838,7 @@ export default class Webform extends NestedDataComponent {
     }
 
     saveDraft() {
-        if (!this.draftEnabled) {
+        if (!this.draftEnabled || this.parent?.component.reference === false) {
             return;
         }
         if (!this.formio) {
@@ -1423,7 +1423,12 @@ export default class Webform extends NestedDataComponent {
     onChange(flags, changed, modified, changes) {
         flags = flags || {};
         let isChangeEventEmitted = false;
-        super.onChange(flags, true);
+        if (this.parent?.subForm === this) {
+          super.onChange({ ...flags, modified }, false);
+        }
+        else {
+          super.onChange(flags, true);
+        }
         const value = _.clone(this.submission);
         flags.changed = value.changed = changed;
         flags.changes = changes;
@@ -1438,9 +1443,9 @@ export default class Webform extends NestedDataComponent {
             flags.fromIframe ||
             (flags.fromSubmission && this.rootPristine && this.pristine && flags.changed);
         const errors = shouldValidate
-            ? this.validate(value.data, { 
-                ...flags, 
-                noValidate: false, 
+            ? this.validate(value.data, {
+                ...flags,
+                noValidate: false,
                 process: 'change'
             })
             : [];

@@ -381,16 +381,15 @@
     fuse.js "^6.6.2"
     redux "^4.2.0"
 
-"@formio/core@v2.1.0-dev.156.78a83fd":
-  version "2.1.0-dev.156.78a83fd"
-  resolved "https://registry.yarnpkg.com/@formio/core/-/core-2.1.0-dev.156.78a83fd.tgz#a23c2e8f3d52eaa821d1fd32bf7d81a849482d50"
-  integrity sha512-37B8hswVc3kcwvN+VCBEo9TzvNu5MkUKtiI1AQcnr4yWBJJGljoc9+lrwGN+XMcDhYlfHaXiTnHvi7xKN3kqlA==
+"@formio/core@2.1.0-dev.191.8c609ab":
+  version "2.1.0-dev.191.8c609ab"
+  resolved "https://registry.yarnpkg.com/@formio/core/-/core-2.1.0-dev.191.8c609ab.tgz#2e442888c60786268ca16edc7cd26c38cbd4b773"
+  integrity sha512-lVj8hqddIwUJiWI6/yWF0NFl/f8QPS3ek4l6h0U1SFMPmeEdWQtcBTMLKi02gHx09kDgXhYocJIbBVVpYyqFnw==
   dependencies:
-    "@types/json-logic-js" "^2.0.7"
     browser-cookies "^1.2.0"
     core-js "^3.38.0"
     dayjs "^1.11.12"
-    dompurify "^3.1.6"
+    dompurify "^3.1.7"
     eventemitter3 "^5.0.0"
     fast-json-patch "^3.1.1"
     fetch-ponyfill "^7.1.0"
@@ -399,10 +398,10 @@
     lodash "^4.17.21"
     moment "^2.29.4"
 
-"@formio/text-mask-addons@^3.8.0-formio.2":
-  version "3.8.0-formio.2"
-  resolved "https://registry.npmjs.org/@formio/text-mask-addons/-/text-mask-addons-3.8.0-formio.2.tgz#b9489e68911c70a31997b97dd846d8a7cca6abdb"
-  integrity sha512-H4Sm+1Sx59jbrlKxtKbzethhp5OIcP8Oi4JBpsvH/SB8P/KCRmtjKbN5ACqURnXmYtBHLJC6Yr9KZibOVRGxpA==
+"@formio/text-mask-addons@^3.8.0-formio.3":
+  version "3.8.0-formio.3"
+  resolved "https://registry.yarnpkg.com/@formio/text-mask-addons/-/text-mask-addons-3.8.0-formio.3.tgz#9da71371a2cb6f781e5e9f90246f25b3d053f75d"
+  integrity sha512-izNhggJTaCEJNOhtdCkouLxBP3byl+ObsHTdp9RpKwNz0k/ZIy/0xuelk1NY4vAjKojnJPiAjtxn+rrcZnEkpw==
 
 "@formio/vanilla-text-mask@^5.1.1-formio.1":
   version "5.1.1-formio.1"
@@ -652,11 +651,6 @@
   version "1.20.4"
   resolved "https://registry.npmjs.org/@types/expect/-/expect-1.20.4.tgz#8288e51737bf7e3ab5d7c77bfa695883745264e5"
   integrity sha512-Q5Vn3yjTDyCMV50TB6VRIbQNxSE4OmZR86VSbGaNpfUolm0iePBB4KdEEHmxoY5sT2+2DIvXW0rvMDP2nHZ4Mg==
-
-"@types/json-logic-js@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/@types/json-logic-js/-/json-logic-js-2.0.7.tgz#09a70a932d0be937618a9fc791291b069e637fb0"
-  integrity sha512-fucvZmbjqa1+gpw/nIwcP+ZIYHTvmwxuQQFKw/yU7+ZSD63z/xgY5pWN7sYUDRzg2Wf9STapL+7c66FNzhU6+Q==
 
 "@types/json-schema@*", "@types/json-schema@^7.0.8":
   version "7.0.15"
@@ -2503,6 +2497,11 @@ dompurify@^3.1.6:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.1.6.tgz#43c714a94c6a7b8801850f82e756685300a027e2"
   integrity sha512-cTOAhc36AalkjtBpfG6O8JimdTMWNXjiePT2xQH/ppBGi/4uIpmj8eKyIkMJErXWARyINV/sB38yf8JCLF5pbQ==
+
+dompurify@^3.1.7:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.2.0.tgz#53c414317c51503183696fcdef6dd3f916c607ed"
+  integrity sha512-AMdOzK44oFWqHEi0wpOqix/fUNY707OmoeFDnbi3Q5I8uOpy21ufUA5cDJPr0bosxrflOVD/H2DMSvuGKJGfmQ==
 
 downloadjs@^1.4.7:
   version "1.4.7"
